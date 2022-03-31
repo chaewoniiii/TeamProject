@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} {% endblock %}
+{% block title %} 홈페이지{% endblock %}
 
 {% block header%}
 {% include "header.html" %}
@@ -10,14 +10,14 @@
 <div class="row mt-5">
     {% if request.session.user %}
     <div class="col-12 d-grid">
-        <a class="btn btn-primary btn-block"  href='{% url "User:logout" %}'">로그아웃</a>
+        <a class="btn btn-primary btn-block"  href='{% url "User:logout" %}'>로그아웃</a>
     </div>
     {% else %}
     <div class="col-6 d-grid"> <!-- BS5 에서 btn-block 사용하려면 parent 에 d-grid 필요 -->
-        <a class="btn btn-primary btn-block"  href='{% url "User:login" %}'">로그인</a>
+        <a class="btn btn-primary btn-block"  href='{% url "User:login" %}'>로그인</a>
     </div>
     <div class="col-6 d-grid">
-        <a class="btn btn-primary btn-block" href='{% url "User:register" %}'">회원가입</a>
+        <a class="btn btn-primary btn-block" href='{% url "User:register" %}'>회원가입</a>
     </div>
     {% endif %}
 </div>

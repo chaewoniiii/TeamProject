@@ -3,11 +3,6 @@ from .models import User
 from django.contrib.auth.hashers import make_password, check_password
 
 def home(request):
-    userId = request.session.get('user')
-    if userId:
-        user = User.objects.get(pk=userId)
-        return render(request, "home.html")
-        # return HttpResponse(f'<h1>{user.username}님 반갑습니다</h1>')
 
     return render(request, "home.html")
 
@@ -59,7 +54,7 @@ def login(request):
                 request.session['user'] = user.id
                 return redirect('/')
             else:
-                res_data['error'] = '비밀번호를 틀렸습니다.'
+                res_data['password_error'] = '비밀번호를 틀렸습니다.'
 
         return render(request, 'login.html', res_data)
 
