@@ -1,6 +1,8 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import News
+from user.models import User
+from .forms import NewsForm
 from django.core.paginator import Paginator
 
 # Create your views here.
@@ -49,3 +51,28 @@ def news_detail(request,pk):
         return Http404('없는 게시글')
 
     return render(request, 'news_detail.html', {"nwd": nwd})
+
+
+def news_create(request):
+    # 현재 로그인 한 상태인지 확인
+    if not request.session.get('user'):     
+        return redirect('/user/login/')     
+
+    if request.method == "POST":
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            news = News()
+            user_id = request.session.get('user') 
+            user = User.objects.get(pk=user_id)
+            news.news_title = form.cleaned_data['title']
+            news.news_content = request.POST['news_content']
+            news.admins = user
+            news.save()  
+
+
+            return redirect('/news/news_list/')
+
+    else:
+        form = NewsForm()
+    
+    return render(request, 'news_create.html', {'form': form})
