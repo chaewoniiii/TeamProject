@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} 공지사항 {% endblock %}
+
+{% block header%}
+{% include "header.html" %}
+{% endblock %}
+
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <table class="table " style="border: 1px solid black;">
+            <thead class="thead-light table-secondary"  >
+                <tr>
+                    <th style="border: 1px solid black;" class="col-2">{{nwd.pk}}</th>
+                    <th style="border: 1px solid black; text-align: center;" class="col-8">{{nwd.news_title}}</th>
+                    <th style="border: 1px solid black; text-align: right;" class="col-2">{{nwd.news_views}}</th>
+                </tr>
+            </thead>
+            <tbody class="text-dark">
+                <tr>
+                    <td colspan="3">{{nwd.news_content}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<a class="btn btn-primary" href='{% url "News:news_list"%}'>목록</a>
+{% endblock%}
