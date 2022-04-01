@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} 평점만는중 {% endblock %}
+
+{% block contents %}
+<div>
+    <h2 style="text-align: center;">영화 포스터 공간</h2>
+    <br>
+</div>
+<form action="." method="post">
+    {%csrf_token%}
+    <div>
+        <textarea class="DOC_TEXT col-12" name="DOC_TEXT" placeholder="내용을 입력." required></textarea>
+    </div>
+    <div class="bg-light d-grid gap-2 d-md-flex justify-content-md-end">
+        <p style="color:#aaa;"id="counter">(0 / 최대 200자)</p>
+        <span class="star">★★★★★
+            <span>★★★★★</span>
+            <input type="range" name='rating_star'oninput="drawStar(this)" value="0" step="1" min="0" max="10">
+          </span>
+        <button type="submit" class="btn btn-secondary btn-sm" href="#">작성</a>
+    </div>
+
+</form>
+
+
+<script src="/static/js/rating_board.js"></script>
+{% endblock %}
+

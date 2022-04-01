@@ -1,6 +1,10 @@
 {% block header %}
 <div>
-    <h2>헤더 입니다</h2>
+    {% if user %}
+        <p>환영합니다 {{user}}님</p>
+    {% else %}
+        <p>로그인 아님</p>
+    {% endif %}
 </div>
 
 {% endblock %}

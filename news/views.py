@@ -54,16 +54,21 @@ def news_detail(request,pk):
 
 
 def news_create(request):
-    # 현재 로그인 한 상태인지 확인
+    
+    user_id = request.session.get('user') 
+    user = User.objects.get(pk=user_id)
+
     if not request.session.get('user'):     
-        return redirect('/user/login/')     
+        return redirect('/user/login/')
+
+    # 혹시 일반 유저가 들어와서 공지추가 글쓰기를 눌렀을 경우
+    if not str(user).startswith('admin'):
+        return redirect('/')
 
     if request.method == "POST":
         form = NewsForm(request.POST)
         if form.is_valid():
             news = News()
-            user_id = request.session.get('user') 
-            user = User.objects.get(pk=user_id)
             news.news_title = form.cleaned_data['title']
             news.news_content = request.POST['news_content']
             news.admins = user
@@ -75,4 +80,6 @@ def news_create(request):
     else:
         form = NewsForm()
     
+    
+
     return render(request, 'news_create.html', {'form': form})

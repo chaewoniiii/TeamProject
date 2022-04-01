@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from user.models import User
 
 # Create your views here.
 def index(request):
-    return render(request, 'home.html')
+    if not request.session.get('user'):
+        return render(request, 'home.html',{"user":""})
+    else:
+        user_id = request.session.get('user')
+        user = User.objects.get(pk=user_id)
+        return render(request, 'home.html', {"user":user})

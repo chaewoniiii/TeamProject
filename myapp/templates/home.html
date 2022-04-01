@@ -3,7 +3,7 @@
 {% block title %} {% endblock %}
 
 {% block header%}
-{% include "header.html" %}
+    {% include 'header.html' with user=user%}
 {% endblock %}
 
 {% block contents %}
