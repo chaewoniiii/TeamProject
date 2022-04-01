@@ -1,9 +1,8 @@
 {% block header %}
 <div>
-    {% if user %}
-        <p>환영합니다 {{user}}님</p>
-    {% else %}
-        <p>로그인 아님</p>
+    <h2>헤더 입니다</h2> 
+    {% if request.session.user %}
+    <h1>{{user.username}}님 반갑습니다</h1>
     {% endif %}
 </div>
 
