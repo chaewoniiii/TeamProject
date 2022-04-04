@@ -12,7 +12,8 @@ class Rating_Board(models.Model):
             )
 
     userId = models.ForeignKey('user.User', on_delete=models.CASCADE)
-    # movie_code = models.ForeignKey()
+    
+    movie_code = models.ForeignKey('movie.Movie', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'rating_board'

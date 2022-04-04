@@ -2,60 +2,81 @@
 
 {% block title %} 평점리스트 {% endblock %}
 
+{% block header%}
+{% if not admin_chk %}
+{% include "rt_create.html" with mcd=mcd %}
+{% endif %}
+<hr>
+{% endblock %}
+
 {% block contents %}
 <div class="row mt-5">
-    <div class="col-10">
+    <div class="col-12">
         <table class="table table-hover">
             </thead>
             <tbody class="text-dark">
                 {% for rtb in rt_board %}
-                <tr onclick="location.href='#'">
-                    <td><a href="#" style="text-decoration: none; color: #000;">{{rtb.rating_content}}</a></td>
-                    <td style="text-align: right;"><p>★★★★★</p>{{rtb.rating}} / 5</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <input type="hidden" id="rtb_val" value="{{rtb.rating}}">
+                <input type="hidden" id="rt_cnt" value="{{rt_board|length}}">
+                  <!-- {% widthratio rtb.rating 1 20 %}% -->
+                <tr>
+                    <td style="width: 20%">{{rtb.movie_code}}</td>
+                    <td style="width: 80%">{{rtb.rating_content}}</td>
+                    <td style="text-align: right;">{{rtb.rating}}/5	
+                        <div class='RatingStar'>
+                            <div class='RatingScore'>
+                                <div class='outer-star'><div class='inner-star' style="width: {% widthratio rtb.rating 1 20 %}%;"></div></div>
+                            </div>
+                        </div>
+                        {% if user == rtb.userId or admin_chk %}
+                            <button class="btn btn-danger" onclick="chkDel()">삭제</button>
+                            <form action="{% url 'Rating:rt_delete' %}" name="delete" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value="{{ rtb.id }}">
+                                <input type="hidden" name="d_mcd" value="{{mcd}}">
+                            </form>
+                        {% endif %}
+                    </td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="text-align: right;">평균:{{rt_avg|floatformat:2}} 요건 있거나 없거나?</div>
+        </div>
     </div>
-</div>
 
 <!-- pagination -->
-<!-- <div class="container mt-1">
+<div class="container mt-1">
     <ul class="pagination justify-content-center">
-        {% if news.number > 1 %}       
-        <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
-        {% endif %}
-
-        {% if start_page > 1%}
-        <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ start_page|add:-1  }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
-        {% endif %}
-
-        {% if news.paginator.num_pages > 1 %}
-            {% for p in page_range %}
-                {% if news.number != p %}
-                    <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ p }}">{{ p }}</a></li>
-                {% else %}
-                    <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-
-        {% if news.paginator.num_pages > end_page %}
-            <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ end_page|add:+1  }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
+        {% if rt_board.number > 1 %}       
+        <li class="page-item"><a class="page-link" href="{% url 'movie:movie_info' mcd %}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
         {% endif %}
         
-        {% if news.number < news.paginator.num_pages %}
-            <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ news.paginator.num_pages }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
+        {% if start_page > 1%}
+        <li class="page-item"><a class="page-link" href="{% url 'movie:movie_info' mcd %}?p={{ start_page|add:-1  }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
+        {% endif %}
+        
+        {% if rt_board.paginator.num_pages > 1 %}
+        {% for p in page_range %}
+        {% if rt_board.number != p %}
+        <li class="page-item"><a class="page-link" href="{% url 'movie:movie_info' mcd %}?p={{ p }}">{{ p }}</a></li>
+        {% else %}
+        <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        
+        {% if rt_board.paginator.num_pages > end_page %}
+        <li class="page-item"><a class="page-link" href="{% url 'movie:movie_info' mcd %}?p={{ end_page|add:+1  }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
+        {% endif %}
+        
+        {% if rt_board.number < rt_board.paginator.num_pages %}
+        <li class="page-item"><a class="page-link" href="{% url 'movie:movie_info' mcd %}?p={{ rt_board.paginator.num_pages }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
         {% endif %}
     </ul>
-</div> -->
+</div>
 <!-- pagination -->
 
-
-<!-- <div class="row">
-    <div class="col-12">
-        <a class="btn btn-primary" href="{% url 'News:news_create' %}">글쓰기</a>
-    </div>
-</div> -->
 
 {% endblock %}

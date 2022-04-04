@@ -1,0 +1,13 @@
+{% if error == 0 %}
+<script>
+    alert("등록완료")
+    location.href = "/movie/movie_info/{{mcd}}/"
+</script>
+{% endif %}
+
+{% if error == 1 %}
+<script>
+    alert("예매를 안한 유저 입니다")
+    location.href = "/movie/movie_info/{{mcd}}/"
+</script>
+{% endif %}
