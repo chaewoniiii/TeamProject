@@ -35,6 +35,7 @@ def register(request):
             )
         
             user.save()
+            return render(request, 'registerOk.html', res_data)
 
         return render(request, 'register.html', res_data)
 
