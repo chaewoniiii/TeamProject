@@ -1,3 +1,4 @@
+from importlib.resources import contents
 from multiprocessing import context
 from traceback import print_tb
 from django.http import Http404
@@ -43,9 +44,6 @@ def rt_create(request,mcd):
             return render(request, 'rtOk.html', content)
 
 
-
-
-
 def rt_list(request, mcd):
     try:
         rt_board = Rating_Board()
@@ -85,10 +83,46 @@ def rt_list(request, mcd):
             'user' : user,
             'admin_chk' : string.startswith('admin'),
         }
-        return content
+        return render(request, 'rt_list.html', content)
+        # return content
 
     except Movie.DoesNotExist:
         return Http404('없는 정보')
+
+def rt_listall(request):
+    user_id = request.session.get('user')
+    user = User.objects.get(pk=user_id)
+    adminchk = str(user).startswith('admin')
+    if not adminchk:
+        return redirect('/')
+
+    rtb = Rating_Board.objects.all().order_by('movie_code')
+
+    write_pages1 = int(request.session.get('write_pages1', 10))
+    per_page1 = int(request.session.get('per_page1', 10))    
+    page = int(request.GET.get('p', 1))
+
+    paginator = Paginator(rtb, per_page1)    
+    rating_page = paginator.get_page(page)          
+    
+    start_page = ((int)((rating_page.number - 1) / write_pages1) * write_pages1) + 1
+    end_page = start_page + write_pages1 - 1
+
+    if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+    
+    now_page = rating_page.number
+    request.session['now_page1'] = now_page
+    
+    content = {
+        "rt_board" : rating_page,
+        'write_pages': write_pages1,
+        'start_page': start_page,
+        'end_page': end_page,
+        'page_range' : range(start_page, end_page + 1),
+    }
+    
+    return render(request, 'rt_listall.html', content)
 
 
 def rt_delete(request):

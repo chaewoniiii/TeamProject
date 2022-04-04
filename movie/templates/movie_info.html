@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header%}
+{% include 'header.html' with user=user %}
+{{user}}
+<hr>
+{% endblock %}
+
+{% block contents %}
+<div>
+    <h3>{{movie}}</h3>
+</div>
+<hr>
+{% include 'rt_list.html' %}
+{% endblock %}
+

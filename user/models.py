@@ -10,6 +10,8 @@ class User(models.Model):
     userId = models.CharField(max_length=128, verbose_name = '아이디')
     password = models.CharField(max_length=128, verbose_name = '비밀번호')
 
+
+
     class Meta:
         db_table = 'movie_user'
         verbose_name = '사용자'

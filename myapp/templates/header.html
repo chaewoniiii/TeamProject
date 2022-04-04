@@ -1,8 +1,19 @@
+
+
 {% block header %}
-<div>
-    <h2>헤더 입니다</h2> 
+<div class="row mt-5">
     {% if request.session.user %}
-    <h1>{{user.username}}님 반갑습니다</h1>
+    <div class="col-12 d-grid">
+        환영합니다 {{user}} 님
+        <a class="btn btn-primary btn-block"  href='{% url "User:logout" %}'>로그아웃</a>
+    </div>
+    {% else %}
+    <div class="col-6 d-grid"> <!-- BS5 에서 btn-block 사용하려면 parent 에 d-grid 필요 -->
+        <a class="btn btn-primary btn-block"  href='{% url "User:login" %}'>로그인</a>
+    </div>
+    <div class="col-6 d-grid">
+        <a class="btn btn-primary btn-block" href='{% url "User:register" %}'>회원가입</a>
+    </div>
     {% endif %}
 </div>
 

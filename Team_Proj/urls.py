@@ -24,5 +24,6 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('login/', include('user.urls')),
     path('ticket/', include('ticket.urls')),
-    path('movie_info/', include('movie.urls')),
+    path('movie/', include('movie.urls')),
+    path('movieAdmin/', include('movieAdmin.urls')),
 ]

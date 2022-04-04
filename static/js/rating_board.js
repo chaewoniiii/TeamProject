@@ -18,3 +18,5 @@ function chkDel(){
                 document.forms['delete'].submit();
             }
 }
+
+
