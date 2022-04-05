@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from importlib.resources import contents
 from multiprocessing import context
 from traceback import print_tb
@@ -12,8 +13,10 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 """
+    ----- error code -----
     0 : 아무 문제 없음 정상 실행
     1 : 예매 안한 유저
+    2 : 이미 평점에 작성 한 글 있음
 """
 
 def rt_create(request,mcd):
@@ -31,13 +34,20 @@ def rt_create(request,mcd):
         }
         # 예매했을 경우에만 작성가능하게..
         ticket_chk = ticket.filter(movie_code=mcd, userId=user_id)
+        rt_board_chk = Rating_Board.objects.all().filter(userId=user_id, movie_code=mcd)
+       
         if ticket_chk:
-            rt_board.rating = float(request.POST['rating_star']) / 2
-            rt_board.rating_content = request.POST['DOC_TEXT']
-            rt_board.userId = user
-            rt_board.movie_code = movie
-            content.update({'error':0})
-            rt_board.save()
+            # 이미 평점을 작성을 했다면?
+            if rt_board_chk:
+                content.update({'error':2})
+            else:
+                rt_board.rating = float(request.POST['rating_star']) / 2
+                rt_board.rating_content = request.POST['DOC_TEXT']
+                rt_board.userId = user
+                rt_board.movie_code = movie
+                content.update({'error':0})
+                rt_board.save()
+
             return render(request, 'rtOk.html', content)
         else:
             content.update({'error':1})
@@ -45,6 +55,7 @@ def rt_create(request,mcd):
 
 
 def rt_list(request, mcd):
+    start_page = 1
     try:
         rt_board = Rating_Board()
         user_id = request.session.get('user')
@@ -55,7 +66,11 @@ def rt_list(request, mcd):
         s = 0
         for i in rt_filter:
             s += i.rating
-           
+        if rt_filter.count() == 0:
+            rt_avg = 0
+        else:            
+            rt_avg = s/rt_filter.count()
+
         write_pages = int(request.session.get('write_pages', 5))
         per_page = int(request.session.get('per_page', 5))    
         page = int(request.GET.get('p', 1))
@@ -63,6 +78,7 @@ def rt_list(request, mcd):
         paginator = Paginator(rt_filter, per_page)    
         rating_page = paginator.get_page(page)          
 
+        
         start_page = ((int)((rating_page.number - 1) / write_pages) * write_pages) + 1
         end_page = start_page + write_pages - 1
 
@@ -74,7 +90,7 @@ def rt_list(request, mcd):
         string = str(user)
         content = {
             "rt_board" : rating_page,
-            "rt_avg": s/rt_filter.count(),
+            "rt_avg": rt_avg,
             'pages' : write_pages,
             'start_page' : start_page,
             'end_page' : end_page,
@@ -83,8 +99,8 @@ def rt_list(request, mcd):
             'user' : user,
             'admin_chk' : string.startswith('admin'),
         }
-        return render(request, 'rt_list.html', content)
-        # return content
+        #return render(request, 'rt_list.html', content)
+        return content
 
     except Movie.DoesNotExist:
         return Http404('없는 정보')
@@ -136,3 +152,34 @@ def rt_delete(request):
             return Http404('없는 글 입니다')
             
         return render(request, 'rt_deleteOk.html', {'mcd':d_mcd})
+
+
+def rt_update(request, mcd):
+    rt_board = Rating_Board()
+    ticket = Ticket.objects.all()
+    user_id = request.session.get('user')
+    user = User.objects.get(pk=user_id)
+    movie = Movie.objects.get(pk=mcd)
+
+    r = Rating_Board.objects.all().filter(movie_code=mcd, userId=user)
+    content = {
+        'mcd':mcd,
+        'rt_board': r,
+        'user':user,
+        'movie': movie.movie_title,
+    }
+    for i in r:
+        pk = i.id
+    if request.method == "POST":
+        rt_board.pk = pk
+        rt_board.rating = float(request.POST['rating_star']) / 2
+        rt_board.rating_content = request.POST['DOC_TEXT']
+        rt_board.userId = user
+        rt_board.movie_code = movie
+        content.update({'error':0})
+        rt_board.save()
+    
+        return render(request, 'rtOk.html', content)
+    else:
+        return render(request, 'rt_update.html', content)
+    

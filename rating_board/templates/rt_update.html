@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} 평점만는중 {% endblock %}
+
+{% block header %}
+{% include 'header.html' with user=user %}
+{% endblock %}
+
+{% block contents %}
+<div>
+    <h2 style="text-align: center;">평점 수정입니다</h2>
+    <br>
+    <h3 style="text-align:center">{{movie}}</h2>
+</div>
+<form action="{% url 'Rating:rt_update' mcd %}" method="post">
+    {%csrf_token%}
+    <div>
+        {% for rtb in rt_board%}
+        <textarea class="DOC_TEXT col-12" name="DOC_TEXT" placeholder="내용을 입력.">{{rtb.rating_content}}</textarea>
+        {% endfor %}
+    </div>
+    <div class="bg-light d-grid gap-2 d-md-flex justify-content-md-end">
+        <p style="color:#aaa;"id="counter">(최대 100자)</p>
+        <span class="star">★★★★★
+            <span>★★★★★</span>
+            <input type="range" name='rating_star'oninput="drawStar(this)" value="0" step="1" min="0" max="10">
+          </span>
+        <button type="submit" class="btn btn-secondary btn-sm">작성</a>
+    </div>
+
+</form>
+{% endblock %}
+
+

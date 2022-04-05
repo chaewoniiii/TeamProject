@@ -11,3 +11,15 @@
     location.href = "/movie/movie_info/{{mcd}}/"
 </script>
 {% endif %}
+
+{% if error == 2 %}
+<script>
+    var rt = confirm('작성한 글이 있습니다. 수정하시겠습니까?')
+    if(rt){
+        location.href = "{%url 'Rating:rt_update' mcd %}"
+    }
+    else{
+        history.back()
+    }
+</script>
+{% endif %}

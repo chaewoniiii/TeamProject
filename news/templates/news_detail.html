@@ -3,7 +3,7 @@
 {% block title %} 공지사항 {% endblock %}
 
 {% block header%}
-{% include "header.html" %}
+{% include "header.html" with user=user %}
 {% endblock %}
 
 {% block contents %}
@@ -26,5 +26,13 @@
     </div>
 </div>
 <br>
-<a class="btn btn-primary" href='{% url "News:news_list"%}'>목록</a>
+{%if userchk %}
+<a class="btn btn-primary" href='{% url "News:news_list"%}?p={{now_page}}'>목록</a>
+<a class="btn btn-warning" href="{% url 'News:news_update' nwd.pk %}">수정</a>
+<button class="btn btn-danger" onclick="chkDel()">삭제</button>
+<form action="{% url 'News:news_delete' %}" name="delete" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ nwd.id }}">
+</form>
+{% endif %}
 {% endblock%}

@@ -1,3 +1,4 @@
+from importlib.resources import contents
 from django.http import Http404
 from django.shortcuts import redirect, render
 from .models import News
@@ -9,6 +10,8 @@ from django.core.paginator import Paginator
 def news_list(request):
 
     all_news = News.objects.all().order_by('-pk')
+    user_id = request.session.get('user') 
+    user = User.objects.get(pk=user_id)
 
     # page = int(request.GET.get('p',1))
     # paginator = Paginator(all_news, 10) 
@@ -29,14 +32,16 @@ def news_list(request):
     
     now_page = news_board.number
     request.session['now_page'] = now_page
- 
-
+    
+    userchk = str(user).startswith('admin')
     context = {
         'news': news_board,
         'write_pages': write_pages,
         'start_page': start_page,
         'end_page': end_page,
         'page_range' : range(start_page, end_page + 1),
+        'userchk' : userchk,
+        'user' : user,
     }
     
     return render(request, 'news_list.html', context)
@@ -44,13 +49,23 @@ def news_list(request):
 
 def news_detail(request,pk):
     try:
+        user_id = request.session.get('user') 
+        user = User.objects.get(pk=user_id)
         nwd = News.objects.get(pk=pk)
         nwd.news_views += 1
         nwd.save()
+        now_page = int(request.session.get('now_page'))
+        userchk = str(user).startswith('admin')
+        content = {
+            'nwd' : nwd,
+            'now_page' : now_page,
+            'user':user,
+            'userchk' : userchk,
+        }
     except News.DoesNotExist:
         return Http404('없는 게시글')
 
-    return render(request, 'news_detail.html', {"nwd": nwd})
+    return render(request, 'news_detail.html', content)
 
 
 def news_create(request):
@@ -73,13 +88,29 @@ def news_create(request):
             news.news_content = request.POST['news_content']
             news.admins = user
             news.save()  
-
-
             return redirect('/news/news_list/')
-
     else:
         form = NewsForm()
-    
-    
 
     return render(request, 'news_create.html', {'form': form})
+
+def news_update(request, pk):
+    if request.method == "POST":
+        try:
+            nwd = News.objects.get(pk=pk)
+            nwd.news_title = request.POST['news_title']
+            nwd.news_content = request.POST['news_content']
+            nwd.save()
+            return redirect('/news/news_list/')
+        except News.DoesNotExist:
+            return Http404("게시글 찾을 수 없음")
+    else:
+        nwd = News.objects.get(pk=pk)
+        return render(request, 'news_update.html', {'nwd':nwd})
+
+def news_delete(reqeust):
+    if reqeust.method == "POST":
+        id = reqeust.POST['id']
+        nwd = News.objects.get(pk=id)
+        nwd.delete()
+    return render(reqeust, 'news_delete.html')

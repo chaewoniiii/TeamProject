@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action="{% url 'News:news_update' nwd.pk %}">
+            {% csrf_token %}  
+            <div class="form-group mt-3">
+                <div>
+                    <label for="news_title">제목:</label>
+                    <input type="text" class="form-control" id="news_title" placeholder="제목을 입력하세요" name="news_title" value="{{ nwd.news_title }}">
+                </div>
+                
+                <br>
+                <label for="news_title">내용:</label>
+                <textarea class="form-control" name="news_content" placeholder="내용입력" >{{nwd.news_content}}</textarea>
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary mt-3">글쓰기</button>
+                <a class="btn btn-primary mt-3" href='{% url "News:news_list"%}?p=1'>목록으로</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

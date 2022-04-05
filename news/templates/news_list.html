@@ -3,7 +3,7 @@
 {% block title %} 공지사항 {% endblock %}
 
 {% block header%}
-{% include "header.html" %}
+{% include "header.html" with user=user %}
 {% endblock %}
 
 {% block contents %}
@@ -66,11 +66,11 @@
 </div>
 <!-- pagination -->
 
-
+{% if userchk %}
 <div class="row">
     <div class="col-12">
         <a class="btn btn-primary" href="{% url 'News:news_create' %}">글쓰기</a>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}
