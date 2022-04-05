@@ -3,56 +3,48 @@
 {% block title %}회원가입{% endblock %}
 
 {% block contents %}
-<div class="row mt-5">
-    <div class="col-12 text-center">
-        <h1>회원가입</h1>
-    </div>
-</div>
-<div class="row mt-5">
-    <div class="col-12 text-danger">
-        {{ error }}
-    </div>
-</div>
 <div class="row">
     <div class="col-10">
         <form method="POST" action=".">
             {% csrf_token %}  
-            <div class="form-group mt-3">
-                <label for="username">사용자 이름</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="이름">
+            <div class="group">
+                    <div class="col-12 text-danger">
+                        {{ error }}
+                    </div>
+                <div class="form-group mt-3">
+                    <label for="username">사용자 이름</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="이름">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="birthday">생년월일</label>
+                    <input type="date" class="form-control" id="birthday" name="birthday" placeholder="생년월일">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="phoneNum">휴대폰 번호</label>
+                    <input type="text" class="form-control" id="phoneNum" name="phoneNum" placeholder="휴대폰번호">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="email">이메일</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="userId">아이디</label>
+                    <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="password">비밀번호</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+                </div>
+                <div class="col-12 text-danger">
+                    {{ password_error }}
+                </div>
+                <div class="form-group mt-3">
+                    <label for="re-password">비밀번호 확인</label>
+                    <input type="password" class="form-control" id="re-password" name="re-password" placeholder="비밀번호 확인">
+                </div>
             </div>
-            <div class="form-group mt-3">
-                <label for="birthday">생년월일</label>
-                <input type="date" class="form-control" id="birthday" name="birthday" placeholder="생년월일">
-            </div>
-            <div class="form-group mt-3">
-                <label for="phoneNum">휴대폰 번호</label>
-                <input type="text" class="form-control" id="phoneNum" name="phoneNum" placeholder="휴대폰번호">
-            </div>
-            <div class="form-group mt-3">
-                <label for="email">이메일</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
-            </div>
-            <div class="form-group mt-3">
-                <label for="userId">아이디</label>
-                <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
-            </div>
-            <div class="form-group mt-3">
-                <label for="password">비밀번호</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-            </div>
-            <div class="col-12 text-danger">
-                {{ password_error }}
-            </div>
-            <div class="form-group mt-3">
-                <label for="re-password">비밀번호 확인</label>
-                <input type="password" class="form-control" id="re-password" name="re-password" placeholder="비밀번호 확인">
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">회원가입</button>
-            <a class="btn btn-primary mt-3" href="{% url 'User:login'%}">로그인</a>
-            <div class="col-12 text-danger">
-                {{ register }}
-            </div>
+            <button type="submit" class="btn btn-primary mt-3 col-6 register-btn">회원가입</button>
+            <a class="btn btn-primary mt-3 col-6 register-btn" href="{% url 'User:login'%}">로그인</a>
         </form>
     </div>
 </div>

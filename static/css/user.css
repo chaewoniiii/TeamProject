@@ -1,0 +1,30 @@
+div.group{
+    border: 5px solid black;
+    padding: 50px 50px;
+    background-color: greenyellow;
+}
+
+.form-control{
+    font-style: red;
+}
+
+
+
+.register-btn{
+    background-color: red;
+    float: left;
+}
+
+.login-btn{
+    background-color: red;
+}
+
+body{
+    background-color: cyan;
+}
+
+.header-btn{
+    background-color: red;
+    float: right;
+    margin-right: 100px;
+}
