@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, HttpResponse
 from .models import User
 from django.contrib.auth.hashers import make_password, check_password
+from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
 
     return render(request, "home.html")
 
-
+@csrf_exempt
 def register(request):
     if request.method == 'GET':
         return render(request, 'register.html')
@@ -39,6 +40,7 @@ def register(request):
 
         return render(request, 'register.html', res_data)
 
+@csrf_exempt
 def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
@@ -58,7 +60,7 @@ def login(request):
                 res_data['password_error'] = '비밀번호를 틀렸습니다.'
 
         return render(request, 'login.html', res_data)
-
+        
 def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
