@@ -166,7 +166,7 @@ def rt_update(request, mcd):
         'mcd':mcd,
         'rt_board': r,
         'user':user,
-        'movie': movie.movie_title,
+        'movie': movie.title,
     }
     for i in r:
         pk = i.id
