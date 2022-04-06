@@ -11,8 +11,7 @@ def news_list(request):
 
     all_news = News.objects.all().order_by('-pk')
     user_id = request.session.get('user') 
-    user = User.objects.get(pk=user_id)
-
+    
     # page = int(request.GET.get('p',1))
     # paginator = Paginator(all_news, 10) 
     # news_board = paginator.get_page(page)  
@@ -32,36 +31,38 @@ def news_list(request):
     
     now_page = news_board.number
     request.session['now_page'] = now_page
-    
-    userchk = str(user).startswith('admin')
     context = {
         'news': news_board,
         'write_pages': write_pages,
         'start_page': start_page,
         'end_page': end_page,
         'page_range' : range(start_page, end_page + 1),
-        'userchk' : userchk,
-        'user' : user,
     }
-    
+    try:
+        user = User.objects.get(pk=user_id)
+        
+    except User.DoesNotExist:
+         pass
+
     return render(request, 'news_list.html', context)
 
 
 def news_detail(request,pk):
     try:
         user_id = request.session.get('user') 
-        user = User.objects.get(pk=user_id)
         nwd = News.objects.get(pk=pk)
         nwd.news_views += 1
         nwd.save()
         now_page = int(request.session.get('now_page'))
-        userchk = str(user).startswith('admin')
         content = {
             'nwd' : nwd,
             'now_page' : now_page,
-            'user':user,
-            'userchk' : userchk,
         }
+        try:
+            user = User.objects.get(pk=user_id)
+            content.update({"userchk":str(user).startswith('admin')})
+        except User.DoesNotExist:
+            pass
     except News.DoesNotExist:
         return Http404('없는 게시글')
 
