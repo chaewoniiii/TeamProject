@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% include 'header.html'%}
+{% endblock %}
+
+{% block contents%}
+<div class="container">
+    <table class="table table-hover">
+        <thead class="thead-light table-secondary"  >
+            <tr>
+                <th>제목</th>
+                <th>개봉일</th>
+                <th>평점</th>
+                <th>장르</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movies in movie %}
+                <tr onclick="location.href='/movie/movie_info/{{movies.pk}}'">
+                    <td>{{movies.title}}</td>
+                    <td>{{movies.released_date}}</td>
+                    <td>{{movies.vote_avg}}</td>
+                    <td>{{movies.genres}}</td>
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -58,6 +58,7 @@ def rt_list(request, mcd):
     start_page = 1
     try:
         rt_board = Rating_Board()
+        movie_in = Movie()
         user_id = request.session.get('user')
         user = User.objects.get(pk=user_id)
         movie = Movie.objects.get(pk=mcd)
@@ -70,6 +71,9 @@ def rt_list(request, mcd):
             rt_avg = 0
         else:            
             rt_avg = s/rt_filter.count()
+        movie.vote_avg = round(rt_avg, 2)
+        movie.save()
+        
 
         write_pages = int(request.session.get('write_pages', 5))
         per_page = int(request.session.get('per_page', 5))    

@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 
 {% block header %}
-<div class="row mt-5">
-    {% if request.session.user %}
-    <div class="col-4 d-grid">
-        <h3>환영합니다 {{user}}님</h3>
-        <a class="btn btn-primary header-btn"  href='{% url "User:logout" %}'>로그아웃</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-lg-5">
+        <a class="navbar-brand" href="{% url 'Main:home'%}">Team_SB</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'Main:home'%}">메인</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'movie:movie_list' %}">영화목록</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">예매하기</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'News:news_list'%}">공지사항</a></li>
+                {% if not request.session.user %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'User:login'%}">로그인</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'User:register'%}">회원가입</a></li>
+                {% else %}
+                <li class="nav-item text-white">환영합니다 {{request.session.userid}}님<br><a class="nav-link" href="{% url 'User:logout'%}" style="text-align: center;">로그아웃</a> </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-    {% else %}
-    <div class="col-2 d-grid"> <!-- BS5 에서 btn-block 사용하려면 parent 에 d-grid 필요 -->
-        <a class="btn btn-primary header-btn"  href='{% url "User:login" %}'>로그인</a>
-    </div>
-    <div class="col-2 d-grid">
-        <a class="btn btn-primary header-btn" href='{% url "User:register" %}'>회원가입</a>
-    </div>
-    {% endif %}
-</div>
-
+</nav>
 {% endblock %}

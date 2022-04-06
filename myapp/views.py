@@ -8,4 +8,5 @@ def index(request):
     else:
         user_id = request.session.get('user')
         user = User.objects.get(pk=user_id)
-        return render(request, 'home.html', {"user":user})
+        request.session['userid'] = user.username
+        return render(request, 'home.html')
