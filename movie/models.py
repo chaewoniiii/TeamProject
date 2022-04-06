@@ -19,3 +19,17 @@ class Movie(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+class Ticket_info(models.Model):
+    start_time = models.DateTimeField()
+
+    branch_name = models.ForeignKey('movieAdmin.Branch_office', on_delete=models.CASCADE)
+    title = models.ForeignKey('Movie', on_delete=models.CASCADE)
+    # 좌석
+    # 상영관
+
+    class Meta:
+        db_table = 'ticket_info'
+
+    def __str__(self):
+        return super().__str__()

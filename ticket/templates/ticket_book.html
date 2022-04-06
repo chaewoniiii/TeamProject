@@ -3,5 +3,19 @@
 {% block title %}예매{% endblock %}
 
 {% block contents %}
-
+<div class="container mt-3">
+    {% for movie in movies %}
+    <span>{{ movie.title }}</span>
+    {% endfor %}
+</div>
+<div class="container mt-3">
+    {% for area in areas %}
+    <span>{{ area.area }}</span>
+    {% endfor %}
+</div>
+<div class="container mt-3">
+    {% for ticket in tickets %}
+    <span>{{ ticket.title }} | {{ ticket.start_time }}</span><br>
+    {% endfor %}
+</div>
 {% endblock %}
