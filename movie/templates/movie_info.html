@@ -7,10 +7,29 @@
 {% endblock %}
 
 {% block contents %}
-<div>
-    <h2 style="text-align: center;">{{movie_title}}</h2>
-</div>
-<hr>
-{% include 'rt_list.html' %}
+<div class="row my-5">
+    <div class="col-md-4 d-flex my-3">
+        <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" style="height:500px; width:350px;">
+    </div>
+    <div class="col-md-4 d-flex my-3" style="width: 700px;"> <!-- 이 부분은 나중에 수정이 필요해보임 -->
+        제목 : {{movie.title}}
+        <br>
+        <br>
+        개봉일 : {{movie.released_date}}
+        <br>
+        <br>
+        평점 : {{movie.vote_avg}}
+        <br>
+        <br>
+        배우 : {{movie.actors}}
+        <br>
+        <br>
+        <br>
+        <br>
+        줄거리
+        <br>
+        <br>
+        {{movie.overview}}
+    </div>
 {% endblock %}
 

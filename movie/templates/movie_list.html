@@ -4,27 +4,22 @@
 {% include 'header.html'%}
 {% endblock %}
 
-{% block contents%}
+{% block contents %}
 <div class="container">
-    <table class="table table-hover">
-        <thead class="thead-light table-secondary"  >
-            <tr>
-                <th>제목</th>
-                <th>개봉일</th>
-                <th>평점</th>
-                <th>장르</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for movies in movie %}
-                <tr onclick="location.href='/movie/movie_info/{{movies.pk}}'">
-                    <td>{{movies.title}}</td>
-                    <td>{{movies.released_date}}</td>
-                    <td>{{movies.vote_avg}}</td>
-                    <td>{{movies.genres}}</td>          
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    <div class="row my-3">
+    {% for movies in moviedata %}
+        <div class=" col-md-4 col-lg-3 my-3" >
+            <div class="d-flex justify-content-center mt-4"> 
+                <a href="{% url 'movie:movie_info' movies.pk %}">
+                    <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:305px; width:200px" id="mainImg" >
+                </a>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title text-center"><strong>{{movies.title|truncatechars:15}}</strong></h6>
+            </div>
+        </div>
+    {% endfor %}
+
 </div>
 {% endblock %}

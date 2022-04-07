@@ -12,3 +12,7 @@ def movieAdminMain(request):
         return render(request, 'movie_adminMain.html')
     else: 
         return redirect('/')
+
+# def movie_management(request): # 영화 모델 추가하고 여기도 영화 DB를 똑같이 movie app 처럼 가져와서 씀
+#    moviedata = Movie.objects.all()
+#    return render(request, 'movie_management.html', {'moviedata': moviedata})
