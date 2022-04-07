@@ -17,13 +17,15 @@ from django.core.paginator import Paginator
     0 : 아무 문제 없음 정상 실행
     1 : 예매 안한 유저
     2 : 이미 평점에 작성 한 글 있음
+    3 : 로그인 안하고 평점 작성할시
 """
 
 def rt_create(request,mcd):
-    if not request.session.get('user'):     
-        return redirect('/user/login/')
+    if not request.session.get('user'):
+        return render(request, 'rtOk.html',{"error":3})
 
     if request.method == "POST":
+
         rt_board = Rating_Board()
         ticket = Ticket.objects.all()
         user_id = request.session.get('user')
@@ -32,6 +34,7 @@ def rt_create(request,mcd):
         content = {
             'mcd':mcd
         }
+
         # 예매했을 경우에만 작성가능하게..
         ticket_chk = ticket.filter(movie_code=mcd, userId=user_id)
         rt_board_chk = Rating_Board.objects.all().filter(userId=user_id, movie_code=mcd)
@@ -60,7 +63,6 @@ def rt_list(request, mcd):
         rt_board = Rating_Board()
         movie_in = Movie()
         user_id = request.session.get('user')
-        user = User.objects.get(pk=user_id)
         movie = Movie.objects.get(pk=mcd)
         rt_board_order = Rating_Board.objects.all().order_by('-pk')
         rt_filter = rt_board_order.filter(movie_code=mcd) 
@@ -91,7 +93,7 @@ def rt_list(request, mcd):
         
         now_page = rating_page.number
         request.session['now_page'] = now_page
-        string = str(user)
+        
         content = {
             "rt_board" : rating_page,
             "rt_avg": rt_avg,
@@ -100,9 +102,15 @@ def rt_list(request, mcd):
             'end_page' : end_page,
             'page_range' : range(start_page, end_page + 1),
             'mcd' : movie.pk,
-            'user' : user,
-            'admin_chk' : string.startswith('admin'),
         }
+
+        try:
+            user = User.objects.get(pk=user_id)
+            string = str(user).startswith('admin')
+            content.update({'admin_chk':string, 'user':user})
+        except User.DoesNotExist:
+            pass
+       
         #return render(request, 'rt_list.html', content)
         return content
 

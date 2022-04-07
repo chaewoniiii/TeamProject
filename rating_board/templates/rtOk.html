@@ -23,3 +23,15 @@
     }
 </script>
 {% endif %}
+
+{% if error == 3 %}
+<script>
+    var rt = confirm('로그인이 필요합니다.')
+    if(rt){
+        location.href = "{%url 'User:login' %}"
+    }
+    else{
+        history.back()
+    }
+</script>
+{% endif %}

@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse
 from .models import User
 from django.contrib.auth.hashers import make_password, check_password
@@ -66,3 +67,20 @@ def logout(request):
         del(request.session['user'])
 
     return redirect('/')
+
+def idchk(request):
+        userId = request.GET.get('userId')
+        if not userId:
+            idchk = 'fail'
+        else:
+            try:
+                u = User.objects.get(userId = userId)
+            except:
+                u = None
+            if u is None:
+                idchk = "pass"
+            else:
+                idchk = "fail"
+        context = {'idchk': idchk}
+        
+        return JsonResponse(context)
