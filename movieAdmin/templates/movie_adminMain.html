@@ -1,8 +1,28 @@
 {% extends 'base.html '%}
 
 {% block contents %}
-<div>
-    <a class="btn" href="{% url 'News:news_list'%}">공지사항</a>
+<div class="flex-shrink-0 p-3 bg-secondary min-vh-100" style="width: 200px;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-white text-decoration-none border-bottom">
+      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      <span class="fs-5 fw-semibold">메인홈</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle text-white align-items-center rounded collapsed" onclick="location.href=`{%url 'News:news_list'%}`">
+          공지사항
+        </button>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle text-white align-items-center rounded collapsed" data-bs-target="#dashboard-collapse">
+          1
+        </button>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle text-white align-items-center rounded collapsed" data-bs-target="#orders-collapse">
+          2
+        </button>
+      </li>
+    </ul>
 </div>
 
 
