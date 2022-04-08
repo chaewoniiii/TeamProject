@@ -1,29 +1,62 @@
 {% extends 'base.html '%}
 
 {% block contents %}
-<div class="flex-shrink-0 p-3 bg-secondary min-vh-100" style="width: 200px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-white text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">메인홈</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-      <li class="mb-1">
-        <button class="btn btn-toggle text-white align-items-center rounded collapsed" onclick="location.href=`{%url 'News:news_list'%}`">
-          공지사항
-        </button>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle text-white align-items-center rounded collapsed" data-bs-target="#dashboard-collapse">
-          1
-        </button>
-      </li>
-      <li class="mb-1">
-        <button class="btn btn-toggle text-white align-items-center rounded collapsed" data-bs-target="#orders-collapse">
-          2
-        </button>
-      </li>
-    </ul>
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+              <p class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white">
+                  <span class="fs-5 d-none d-sm-inline">Menu</span>
+              </p>
+              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                      <a href="/" class="nav-link align-middle px-0 text-white">
+                          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">메인홈</span>
+                      </a>
+                  </li>
+                  <hr>
+                  <li>
+                    <button class="nav-link align-middle px-0 text-white" onclick="admin_news_show()">
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">공지사항</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="nav-link align-middle px-0 text-white" onclick="movie_list_show()">
+                      <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">영화목록</span>
+                    </button>
+                  </li>
+               
+              </ul>
+              <hr>
+          </div>
+      </div>
+
+      <!-- 내용 가져오기 -->
+      <div class="col py-3" id="news">
+          <h3>공지사항</h3>
+          {% include 'news_list.html' with madmin=1 %}
+      </div>
+      <div class="col py-3" id="movie_list">
+          <h3>영화목록</h3>
+          {% include 'movie_list.html' with madmin=1%}
+      </div>
+  </div>
 </div>
 
+<script>
+  $(document).ready(function(){
+    $('#news').hide();
+    $('#movie_list').hide();
+  })
+  function admin_news_show(){
+    $('#news').show();
+    $('#movie_list').hide();
+  }
+  function movie_list_show(){
+    $('#news').hide();
+    $('#movie_list').show();
+  }
+</script>
 
 {% endblock %}

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block header %}
+{% if madmin != 1 %}
 {% include 'header.html'%}
+{% endif %}
 {% endblock %}
 
 {% block contents %}

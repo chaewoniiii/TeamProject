@@ -3,7 +3,9 @@
 {% block title %} 공지사항 {% endblock %}
 
 {% block header%}
+{% if madmin != 1 %}
 {% include "header.html"%}
+{% endif %}
 {% endblock %}
 
 {% block contents %}
