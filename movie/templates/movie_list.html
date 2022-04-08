@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block header %}
 {% if madmin != 1 %}
 {% include 'header.html'%}
@@ -8,20 +8,31 @@
 
 {% block contents %}
 <div class="container">
-
-    <div class="row my-3">
-    {% for movies in moviedata %}
-        <div class=" col-md-4 col-lg-3 my-3" >
-            <div class="d-flex justify-content-center mt-4"> 
-                <a href="{% url 'movie:movie_info' movies.pk %}">
-                    <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:305px; width:200px" id="mainImg" >
-                </a>
+<div class="row my-3">
+        {% for movies in moviedata %}
+            <div class=" col-md-4 col-lg-3 my-3" >
+                <div class="d-flex justify-content-center mt-4"> 
+                    <a href="{% url 'movie:movie_info' movies.pk %}">
+                        <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:305px; width:200px" id="mainImg" >
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title text-center"><strong>{{movies.title|truncatechars:15}}</strong></h6>
+                </div>
             </div>
-            <div class="card-body">
-                <h6 class="card-title text-center"><strong>{{movies.title|truncatechars:15}}</strong></h6>
-            </div>
+        {% endfor %}
+        <div class="d-flex justify-content-start col-2">
+            {% if moviedata.has_previous%}
+                <a href="?p=1"><img src="{% static 'img/left_2arrow.png'%}" width="50" height="50" alt=""> </a>
+                <a href="?p={{moviedata.previous_page_number}}"> <img src="{% static 'img/left_arrow.png'%}" width="50" height="50" alt=""> </a>
+            {% endif %}
         </div>
-    {% endfor %}
-
+        <div class="d-flex justify-content-end col-10">
+            {% if moviedata.has_next %}
+            <a href="?p={{moviedata.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
+            <a href="?p={{moviedata.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
+            {% endif %}
+        </div>
 </div>
+
 {% endblock %}

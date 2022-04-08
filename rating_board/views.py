@@ -20,7 +20,7 @@ from django.core.paginator import Paginator
     3 : 로그인 안하고 평점 작성할시
 """
 
-def rt_create(request,mcd):
+def rt_create(request,pk):
     if not request.session.get('user'):
         return render(request, 'rtOk.html',{"error":3})
 
@@ -30,14 +30,14 @@ def rt_create(request,mcd):
         ticket = Ticket.objects.all()
         user_id = request.session.get('user')
         user = User.objects.get(pk=user_id)
-        movie = Movie.objects.get(pk=mcd)
+        movie = Movie.objects.get(pk=pk)
         content = {
-            'mcd':mcd
+            'mcd':pk
         }
 
         # 예매했을 경우에만 작성가능하게..
-        ticket_chk = ticket.filter(movie_code=mcd, userId=user_id)
-        rt_board_chk = Rating_Board.objects.all().filter(userId=user_id, movie_code=mcd)
+        ticket_chk = ticket.filter(movie_code=pk, userId=user_id)
+        rt_board_chk = Rating_Board.objects.all().filter(userId=user_id, movie_code=pk)
        
         if ticket_chk:
             # 이미 평점을 작성을 했다면?
@@ -57,15 +57,15 @@ def rt_create(request,mcd):
             return render(request, 'rtOk.html', content)
 
 
-def rt_list(request, mcd):
+def rt_list(request, pk):
     start_page = 1
     try:
         rt_board = Rating_Board()
         movie_in = Movie()
         user_id = request.session.get('user')
-        movie = Movie.objects.get(pk=mcd)
+        movie = Movie.objects.get(pk=pk)
         rt_board_order = Rating_Board.objects.all().order_by('-pk')
-        rt_filter = rt_board_order.filter(movie_code=mcd) 
+        rt_filter = rt_board_order.filter(movie_code=pk) 
         s = 0
         for i in rt_filter:
             s += i.rating
@@ -166,16 +166,16 @@ def rt_delete(request):
         return render(request, 'rt_deleteOk.html', {'mcd':d_mcd})
 
 
-def rt_update(request, mcd):
+def rt_update(request, pk):
     rt_board = Rating_Board()
     ticket = Ticket.objects.all()
     user_id = request.session.get('user')
     user = User.objects.get(pk=user_id)
-    movie = Movie.objects.get(pk=mcd)
+    movie = Movie.objects.get(pk=pk)
 
-    r = Rating_Board.objects.all().filter(movie_code=mcd, userId=user)
+    r = Rating_Board.objects.all().filter(movie_code=pk, userId=user)
     content = {
-        'mcd':mcd,
+        'mcd':pk,
         'rt_board': r,
         'user':user,
         'movie': movie.title,
