@@ -19,10 +19,6 @@ div.group{
     background-color: red;
 }
 
-/* body{
-    background-color: cyan;
-} */
-
-.header-btn{
-    background-color: blueviolet;
+.text-align{
+    text-align: center;
 }
