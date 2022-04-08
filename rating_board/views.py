@@ -180,6 +180,7 @@ def rt_update(request, mcd):
         'user':user,
         'movie': movie.title,
     }
+
     for i in r:
         pk = i.id
     if request.method == "POST":
@@ -188,6 +189,7 @@ def rt_update(request, mcd):
         rt_board.rating_content = request.POST['DOC_TEXT']
         rt_board.userId = user
         rt_board.movie_code = movie
+
         content.update({'error':0})
         rt_board.save()
     
