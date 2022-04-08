@@ -7,7 +7,7 @@ from .models import Movie
 def movie_info(request, pk):
     movie = Movie.objects.get(id=pk)
     context = {'movie':movie}
-    return render(request, 'movie.html', context)
+    return render(request, 'movie_info.html', context)
 
 def movie_list(request):
     moviedata = Movie.objects.all()[:8]
