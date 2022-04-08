@@ -72,6 +72,7 @@ def idchk(request):
         userId = request.GET.get('userId')
         if not userId:
             idchk = 'fail'
+            
         else:
             try:
                 u = User.objects.get(userId = userId)
