@@ -12,11 +12,8 @@ def movieAdminMain(request):
     user = User.objects.get(pk=user_id)
     adminchk = str(user).startswith('admin')
 
-    nl = news_view.news_list(request)
-    
-
     if adminchk:
-        return render(request, 'movie_adminMain.html',{'nl':nl})
+        return render(request, 'movie_adminMain.html')
     else: 
         return redirect('/')
 

@@ -43,7 +43,9 @@ def news_list(request):
         
     except User.DoesNotExist:
          pass
+  
     return render(request, 'news_list.html', context)
+
 
 
 def news_detail(request,pk):
