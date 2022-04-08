@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from movie.models import Movie
 from user.models import User
 
 # Create your views here.
@@ -9,4 +10,6 @@ def index(request):
         user_id = request.session.get('user')
         user = User.objects.get(pk=user_id)
         request.session['userid'] = user.username
+    
+
         return render(request, 'home.html')
