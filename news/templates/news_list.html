@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %} 공지사항 {% endblock %}
-
+{% load static %}
 {% block header%}
 {% if madmin != 1 %}
 {% include "header.html"%}
@@ -40,6 +40,47 @@
 <!-- pagination -->
 <div class="container mt-1">
     <ul class="pagination justify-content-center">
+        {% if news.has_previous %}
+          <li class="page-item">
+              <!-- 이전 페이지 있을경우 -->
+                <a class="page-link" href="?p={{ news.previous_page_number }}"><img src="{% static 'img/left_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True"><img src="{% static 'img/left_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+          </li>
+        {% endif %}
+
+        {% for i in news.paginator.page_range %}
+          {% if news.number == i %}
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">
+                    {{ i }}
+                <span class="sr-only">(current)</span>
+              </span>
+            </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?p={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        
+        {% if news.has_next %}
+        <li class="page-item">
+            <!-- 다음 페이지 있을경우 -->
+          <a class="page-link" href="?p={{ news.next_page_number }}"><img src="{% static 'img/right_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+        </li>
+         {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="True"><img src="{% static 'img/right_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+        </li>
+        {% endif %}
+
+
+
+
+
+
+        {% comment %}
         {% if news.number > 1 %}       
         <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
         {% endif %}
@@ -65,6 +106,7 @@
         {% if news.number < news.paginator.num_pages %}
             <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ news.paginator.num_pages }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
         {% endif %}
+        {% endcomment%}
     </ul>
 </div>
 <!-- pagination -->

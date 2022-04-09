@@ -36,9 +36,9 @@
       <!-- 내용 가져오기 -->
       <div class="col py-3" id="news">
           <h3>공지사항</h3>
-            {% include 'news_list.html' with madmin=1%}  
+            {% include 'news_list.html' with madmin=1 news=news%}  
       </div>
-      <div class="col py-3" id="movie_list">
+      <div class="col py-3" id="movie_list" style="display: none;">
           <h3>영화목록</h3>
           {% include 'movie_list.html' with madmin=1%}
       </div>
@@ -46,14 +46,9 @@
 </div>
 
 <script>
-  $(document).ready(function(){
-    $('#news').hide();
-    $('#movie_list').hide();
-  })
   function admin_news_show(){
     $('#news').show();
     $('#movie_list').hide();
-    $('#news').submit()
   }
   function movie_list_show(){
     $('#news').hide();

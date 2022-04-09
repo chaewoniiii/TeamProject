@@ -7,37 +7,27 @@ from .forms import NewsForm
 from django.core.paginator import Paginator
 
 # Create your views here.
-def news_list(request):
-
+def share_news_list(request):
     all_news = News.objects.all().order_by('-pk')
-    user_id = request.session.get('user') 
-    
-    # page = int(request.GET.get('p',1))
-    # paginator = Paginator(all_news, 10) 
-    # news_board = paginator.get_page(page)  
-    
-    write_pages = int(request.session.get('write_pages', 5))
-    per_page = int(request.session.get('per_page', 10))    
+        
+    per_page = int(request.session.get('per_page', 2))    
     page = int(request.GET.get('p', 1))
 
     paginator = Paginator(all_news, per_page)    
     news_board = paginator.get_page(page)          
 
-    start_page = ((int)((news_board.number - 1) / write_pages) * write_pages) + 1
-    end_page = start_page + write_pages - 1
-
-    if end_page >= paginator.num_pages:
-        end_page = paginator.num_pages
-    
-    now_page = news_board.number
-    request.session['now_page'] = now_page
     context = {
         'news': news_board,
-        'write_pages': write_pages,
-        'start_page': start_page,
-        'end_page': end_page,
-        'page_range' : range(start_page, end_page + 1),
     }
+
+    return context
+
+def news_list(request):
+
+    user_id = request.session.get('user') 
+  
+    context = share_news_list(request)
+    
     try:
         user = User.objects.get(pk=user_id)
         

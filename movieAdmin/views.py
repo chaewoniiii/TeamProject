@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import redirect, render
 from user.models import User
 from movie.models import Movie
@@ -12,8 +13,13 @@ def movieAdminMain(request):
     user = User.objects.get(pk=user_id)
     adminchk = str(user).startswith('admin')
 
+    context = {}
+    context.update({
+        "news":news_view.share_news_list(request)['news'],
+        })
+    
     if adminchk:
-        return render(request, 'movie_adminMain.html')
+        return render(request, 'movie_adminMain.html', context)
     else: 
         return redirect('/')
 
