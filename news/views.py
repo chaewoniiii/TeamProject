@@ -27,7 +27,7 @@ def news_list(request):
     user_id = request.session.get('user') 
   
     context = share_news_list(request)
-    
+
     try:
         user = User.objects.get(pk=user_id)
         

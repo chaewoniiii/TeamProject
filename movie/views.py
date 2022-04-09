@@ -32,3 +32,4 @@ def movie_list(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'movie_list.html', {'moviedata':page_obj})
+

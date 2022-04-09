@@ -1,0 +1,8 @@
+{% extends 'movie_adminMain.html' %}
+
+{% block admincontent %}
+<div class="col py-3" id="news">
+    <h3>공지사항</h3>
+      {% include 'news_list.html' with madmin=1 news=news%}  
+</div>
+{% endblock %}

@@ -75,38 +75,6 @@
         </li>
         {% endif %}
 
-
-
-
-
-
-        {% comment %}
-        {% if news.number > 1 %}       
-        <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
-        {% endif %}
-
-        {% if start_page > 1%}
-        <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ start_page|add:-1  }}" title="이전"><i class='fas fa-angle-left'></i></a></li>
-        {% endif %}
-
-        {% if news.paginator.num_pages > 1 %}
-            {% for p in page_range %}
-                {% if news.number != p %}
-                    <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ p }}">{{ p }}</a></li>
-                {% else %}
-                    <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-
-        {% if news.paginator.num_pages > end_page %}
-            <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ end_page|add:+1  }}" title="다음"><i class='fas fa-angle-right'></i></a></li>
-        {% endif %}
-        
-        {% if news.number < news.paginator.num_pages %}
-            <li class="page-item"><a class="page-link" href="{% url 'News:news_list' %}?p={{ news.paginator.num_pages }}" title="마지막"><i class='fas fa-angle-double-right'></i></a></li>
-        {% endif %}
-        {% endcomment%}
     </ul>
 </div>
 <!-- pagination -->

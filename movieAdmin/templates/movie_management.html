@@ -1,30 +1,29 @@
-{% extends 'base.html' %}
-{% block contents %}
-<h1>영화 목록</h1>
-<a href="#"><button style="float: right; background-color: black; color: white;">영화추가</button></a>
-<br>
-<div class="row mt-8">
-    <div class="col-md-8" style="float: none; margin: 0 auto;">
-        <table class="table table-light table-hover">
-            <thead class="thead-light">
-                <tr>
-                    <th>아이디</th>
-                    <th>제목</th>
-                    <th>개봉일</th>
-                    <th>평점</th>
-                </tr>
-            </thead>
-            <tbody class="text-dark">
-                {% for a in moviedata %}
-                <tr onclick="location.href='#'">
-                    <td>{{ a.id }}</td>
-                    <td>{{ a.title }}</td>
-                    <td>{{ a.released_date }}</td>
-                    <td>{{ a.vote_avg }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+{% extends 'movie_adminMain.html' %}
+
+{% block admincontent %}
+<div class="col py-3" id="news">
+    <h3>영화 목록</h3>
+    <a href="#"><button style="float: right; background-color: black; color: white;">영화추가</button></a>
+    <table class="table table-light table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>아이디</th>
+                <th>제목</th>
+                <th>개봉일</th>
+                <th>평점</th>
+            </tr>
+        </thead>
+        <tbody class="text-dark">
+            {% for a in moviedata %}
+            <tr onclick="location.href='#'">
+                <td>{{ a.id }}</td>
+                <td>{{ a.title }}</td>
+                <td>{{ a.released_date }}</td>
+                <td>{{ a.vote_avg }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
+
 {% endblock %}
