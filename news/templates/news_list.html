@@ -23,9 +23,9 @@
             </thead>
             <tbody class="text-dark">
                 {% for nw in news %}
-                <tr onclick="location.href='/news/news_detail/{{ nw.pk }}'">
+                <tr>
                     <td>{{nw.pk}}</td>
-                    <td><a href="#" style="text-decoration: none; color: #000;">{{nw.news_title}}</a></td>
+                    <td><a href="{% url 'News:news_detail' nw.pk%}" style="text-decoration: none; color: #000;">{{nw.news_title}}</a></td>
                     <td>{{nw.news_views}}</td>
                     <td>{{nw.news_date|date:"Y-m-d"}}</td>
                     <td>{{nw.admins}}</td>

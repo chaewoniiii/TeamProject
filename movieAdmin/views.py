@@ -15,7 +15,7 @@ def movieAdminMain(request):
     
     
     if adminchk:
-        return render(request, 'movie_adminMain.html')
+        return render(request, 'movie_admin.html')
     else: 
         return redirect('/')
 

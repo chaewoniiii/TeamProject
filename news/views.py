@@ -80,7 +80,7 @@ def news_create(request):
             news.news_content = request.POST['news_content']
             news.admins = user
             news.save()  
-            return redirect('/news/news_list/')
+            return redirect('/movieAdmin/admin_newlist/')
     else:
         form = NewsForm()
 
@@ -93,7 +93,7 @@ def news_update(request, pk):
             nwd.news_title = request.POST['news_title']
             nwd.news_content = request.POST['news_content']
             nwd.save()
-            return redirect('/news/news_list/')
+            return redirect('/movieAdmin/admin_newlist/')
         except News.DoesNotExist:
             return Http404("게시글 찾을 수 없음")
     else:
