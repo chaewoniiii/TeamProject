@@ -52,5 +52,11 @@ def movie_management(request): # 영화 모델 추가하고 여기도 영화 DB�
 
    return render(request, 'movie_management.html', context)
 
+def admin_userchk(request):
+    user = User.objects.all().order_by('-pk')
+    context = {
+        'user':user
+    }
+    return render(request, 'admin_userchk.html', context)
 
 

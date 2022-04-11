@@ -21,5 +21,10 @@ def index(request):
         page_number = request.GET.get('p')
         page_obj = paginator.get_page(page_number)
 
+        context = {
+                'movie' : page_obj,
+                'movie_s' : now_movie
+        }
 
-        return render(request, 'home.html', {'movie':page_obj})
+
+        return render(request, 'home.html', context)
