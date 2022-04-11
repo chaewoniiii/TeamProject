@@ -26,31 +26,6 @@
         <h2><b>최근 15일 이내 개봉한 영화</b></h3>
     </th>
     <tr>
-        <td class="align-middle col-2">
-            {% if movie.has_previous%}
-                <a href="?p=1"><img src="{% static 'img/left_2arrow.png'%}" width="50" height="50" alt=""></a>
-                <a href="?p={{movie.previous_page_number}}"><img src="{% static 'img/left_arrow.png'%}" width="50" height="50" alt=""> </a>
-            {% endif %}
-        </td>
-        <td class="align-middle text-center col-8">
-            {% for movies in movie %}
-                <div>
-                    <div class="d-flex justify-content-center"> 
-                        <a href="{% url 'movie:movie_info' movies.pk %}">
-                            <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:auto; width:auto" id="mainImg" >
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </td>
-        <td class="align-middle col-2">
-            {% if movie.has_next %}
-                <a href="?p={{movie.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
-                <a href="?p={{movie.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
-            {% endif %}
-        </td>
-    </tr>
-    <tr>
         <td colspan="3" class="text-center">
             <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -65,6 +40,32 @@
             </div>
         </td>
     </tr>
+    <tr>
+        <td class="align-middle col-2">
+            {% if movie.has_previous%}
+                <a href="?p=1"><img src="{% static 'img/left_2arrow.png'%}" width="50" height="50" alt=""></a>
+                <a href="?p={{movie.previous_page_number}}"><img src="{% static 'img/left_arrow.png'%}" width="50" height="50" alt=""> </a>
+            {% endif %}
+        </td>
+        <td class="align-middle text-center col-8">
+            {% for movies in movie %}
+                <div>
+                    <div class="d-flex justify-content-center"> 
+                        <a href="{% url 'movie:movie_info' movies.pk %}">
+                            <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:450px; width:300px" id="mainImg" >
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </td>
+        <td class="align-middle col-2">
+            {% if movie.has_next %}
+                <a href="?p={{movie.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
+                <a href="?p={{movie.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
+            {% endif %}
+        </td>
+    </tr>
+
 </table>
 
 {% endblock %}

@@ -14,8 +14,10 @@ def share_news_list(request):
     page = int(request.GET.get('p', 1))
 
     paginator = Paginator(all_news, per_page)    
-    news_board = paginator.get_page(page)          
+    news_board = paginator.get_page(page)       
 
+    now_page = news_board.number
+    request.session['now_page'] = now_page
     context = {
         'news': news_board,
     }
