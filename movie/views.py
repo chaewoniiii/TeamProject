@@ -21,15 +21,15 @@ def movie_info(request, pk):
     
 
 def movie_list(request):
-    # 39개정도 있음
+    
     moviedata = Movie.objects.all().order_by('-released_date')
     context = {}
     now = datetime.now()
     before_now = now - timedelta(days=60)
     now_movie = moviedata.filter(released_date__gte = before_now)
-    paginator = Paginator(now_movie, 8)
+    paginator = Paginator(now_movie, 4)
     page_number = request.GET.get('p')
     page_obj = paginator.get_page(page_number)
-
+    
     return render(request, 'movie_list.html', {'moviedata':page_obj})
 

@@ -66,7 +66,7 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
 
-    return redirect('/')
+    return render(request, 'logout.html')
 
 def idchk(request):
         userId = request.GET.get('userId')

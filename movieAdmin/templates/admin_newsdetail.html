@@ -1,0 +1,6 @@
+{% extends 'movie_adminMain.html' %}
+
+{% block admincontent %}
+    <h3>공지사항</h3>
+      {% include 'news_detail.html' with madmin=1%}  
+{% endblock %}

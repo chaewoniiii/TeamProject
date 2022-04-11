@@ -3,8 +3,18 @@ from django.shortcuts import redirect, render
 from user.models import User
 from movie.models import Movie
 from news import views as news_view
-
+from django.core.paginator import Paginator
 # Create your views here.
+
+def admin_newlist(request):
+    
+    context = {}
+    context.update({
+        "news":news_view.share_news_list(request)['news'],
+        })
+
+    return render(request, 'admin_newlist.html',context)
+
 def movieAdminMain(request):
     if not request.session.get('user'):
         return redirect('/user/login/')
@@ -21,13 +31,26 @@ def movieAdminMain(request):
 
 def movie_management(request): # 영화 모델 추가하고 여기도 영화 DB를 똑같이 movie app 처럼 가져와서 씀
    moviedata = Movie.objects.all().order_by('-released_date')
-   return render(request, 'movie_management.html', {'moviedata': moviedata})
 
-def admin_newlist(request):
-    
-    context = {}
-    context.update({
-        "news":news_view.share_news_list(request)['news'],
-        })
+   per_page = int(request.session.get('per_page', 10))    
+   page = int(request.GET.get('p', 1))
+   paginator = Paginator(moviedata, per_page)  
+   movie_paing = paginator.get_page(page) 
+   write_pages = int(request.session.get('write_pages', 10)) 
+   start_page = ((int)((movie_paing.number - 1) / write_pages) * write_pages) + 1
+   end_page = start_page + write_pages - 1
 
-    return render(request, 'admin_newlist.html',context)
+   if end_page >= paginator.num_pages:
+        end_page = paginator.num_pages
+   context = {
+       'moviedata' : movie_paing,
+       'write_pages': write_pages,
+       'start_page': start_page,
+       'end_page': end_page,
+       'page_range' : range(start_page, end_page + 1),
+   }
+
+   return render(request, 'movie_management.html', context)
+
+
+

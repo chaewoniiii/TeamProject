@@ -33,7 +33,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if madmin == 1%}
         <a href="{% url 'News:news_create' %}" class="btn btn-primary">글작성</a>
+        {% endif %}
     </div>
 </div>
 

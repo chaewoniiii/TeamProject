@@ -21,18 +21,21 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="d-flex justify-content-start col-2">
-            {% if moviedata.has_previous%}
+        <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-start">
+                {% if moviedata.has_previous%}
                 <a href="?p=1"><img src="{% static 'img/left_2arrow.png'%}" width="50" height="50" alt=""> </a>
                 <a href="?p={{moviedata.previous_page_number}}"> <img src="{% static 'img/left_arrow.png'%}" width="50" height="50" alt=""> </a>
-            {% endif %}
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-end">
+                {% if moviedata.has_next %}
+                <a href="?p={{moviedata.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
+                <a href="?p={{moviedata.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
+                {% endif %}
+            </div>
         </div>
-        <div class="d-flex justify-content-end col-10">
-            {% if moviedata.has_next %}
-            <a href="?p={{moviedata.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
-            <a href="?p={{moviedata.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
-            {% endif %}
-        </div>
+</div>
 </div>
 
 {% endblock %}

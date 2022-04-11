@@ -1,9 +1,9 @@
 {% extends 'movie_adminMain.html' %}
-
+{% load static %}
 {% block admincontent %}
     <h3>영화 목록</h3>
     <a href="#"><button style="float: right; background-color: black; color: white;">영화추가</button></a>
-    <table class="table table-light table-hover">
+    <table class="table table-light">
         <thead class="thead-light">
             <tr>
                 <th>아이디</th>
@@ -22,6 +22,9 @@
             </tr>
             {% endfor %}
         </tbody>
+        <tr>
+            {% include 'movie_managpage.html' %}
+        </tr>
     </table>
 
 {% endblock %}

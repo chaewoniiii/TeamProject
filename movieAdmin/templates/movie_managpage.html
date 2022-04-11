@@ -1,0 +1,38 @@
+{% load static %}
+<td colspan="4">
+    <ul class="pagination justify-content-center">
+        {% if moviedata.has_previous %}
+          <li class="page-item">
+              <!-- 이전 페이지 있을경우 -->
+                <a class="page-link" href="?p={{ moviedata.previous_page_number }}"><img src="{% static 'img/left_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="True"><img src="{% static 'img/left_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+          </li>
+        {% endif %}
+
+        {% if moviedata.paginator.num_pages > 1 %}
+        {% for p in page_range %}
+            {% if moviedata.number != p %}
+                <li class="page-item"><a class="page-link" href="{% url 'Madmin:movie_management' %}?p={{ p }}">{{ p }}</a></li>
+            {% else %}
+                <li class="page-item active"><a class="page-link" href="#" title="현재페이지">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% endif %} 
+
+
+        {% if moviedata.has_next %}
+        <li class="page-item">
+            <!-- 다음 페이지 있을경우 -->
+          <a class="page-link" href="?p={{ moviedata.next_page_number }}"><img src="{% static 'img/right_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="True"><img src="{% static 'img/right_arrow.png' %}" alt="" style="width: 20px; height: 20px;"></a>
+        </li>
+        {% endif %}
+
+    </ul>
+</td>
