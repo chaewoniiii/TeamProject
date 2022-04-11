@@ -1,7 +1,7 @@
 div.group{
     border: 5px solid black;
     padding: 50px 50px;
-    background-color: greenyellow;
+    background-color: rgb(216, 208, 208);
 }
 
 .form-control{
