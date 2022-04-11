@@ -57,6 +57,8 @@ def admin_userchk(request):
     context = {
         'user':user
     }
+    if request.method == 'POST':
+        context.update({'userinfo': 1})
+        return render(request,'admin_userchk.html', context)
     return render(request, 'admin_userchk.html', context)
-
 

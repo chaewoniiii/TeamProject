@@ -1,18 +1,41 @@
 {% extends 'movie_adminMain.html' %}
 {% load idreplace %}
+{% block script %}
+<script>
+    function userchk(){
+        var r = prompt("확인을 위한 코드 입력")
+        if(r == '1234'){
+            alert('확인되었습니다')
+            $('#userbtn').submit()
+        }
+    }
+</script>
+{% endblock %}
+
 {% block admincontent %}
     <h3>유저 확인</h3>
+    <form action="." method="post">
+        {% csrf_token %}
+        <button id="userbtn" style="float: right; background-color: black; color: white;" onclick="userchk()">유저확인</button>
+    </form>
     <table class="table">
         <thead>
             <td>유저이름</td>
             <td>유저아이디</td>
+            <td>이메일</td>
             <td>생년월일</td>
         </thead>
         <tbody>
             {% for user in user %}
             <tr>
                     <td>{{user.username}}</td>
+                    {% if userinfo != 1%}
                     <td>{{user.userId|idreplace }}</td>
+                    <td>{{user.email|emailreplace}}</td>
+                    {% else %}
+                    <td>{{user.userId }}</td>
+                    <td>{{user.email}}</td>
+                    {% endif %}
                     <td>{{user.birthday}}</td>
             </tr>
                 {% endfor %}
