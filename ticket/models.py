@@ -13,6 +13,13 @@ class Ticket(models.Model):
     def __str__(self):
         return super().__str__()
 
+class Seat_info(models.Model):
+    res_check = models.BooleanField()
 
+    ticket_info = models.ForeignKey('movie.Ticket_info', on_delete=models.CASCADE)
 
+    class Meta:
+        db_table = 'seat_info'
 
+    def __str__(self):
+        return super().__str__()
