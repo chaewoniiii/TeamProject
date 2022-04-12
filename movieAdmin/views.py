@@ -62,3 +62,7 @@ def admin_userchk(request):
         return render(request,'admin_userchk.html', context)
     return render(request, 'admin_userchk.html', context)
 
+
+def movie_insert(request):
+    moviedata = Movie.objects.all()
+    return render(request, 'movie_insert.html', {'moviedata': moviedata})

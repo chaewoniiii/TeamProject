@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<div style="border: solid 1px black; text-align: center; border-radius: 20px;">
+<h1 class="mt-5">영화 추가</h1>
+
+<div class="mt-5 container">
+    <h2>제목</h2>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        선택하기
+    </button>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>제목을 선택하세요</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                <form name="frm">
+                    <select name="sel">
+                            <option value="none" selected>--제목선택--</option>
+                        {% for a in moviedata %}
+                            <option value="1">{{a.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="선택" onclick="check()">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mt-5">
+    <label for="branch_office">지점명:</label>
+    <select name="branch_office">
+    </select>
+</div>
+
+
+<div class="m-5">
+    <label for="title">좌석예약여부:</label>
+</div>
+
+
+<div class="m-5">
+    <label for="title">상영관:</label>
+</div>
+
+<a href="#"><button type="submit" class="m-5 btn btn-outline-dark">작성완료</button></a>
+</div>
+
+<script type="text/javascript">
+function check()
+{
+    if(frm.sel.value == 'none')
+    {
+        alert("제목을 선택하세요")
+        return false;
+    }
+    else
+    {
+        check.submit();
+    }
+}
+</script>
+{% endblock %}
