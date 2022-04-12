@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}회원가입{% endblock %}
+{% block header%}
+    {% include 'header.html' %}
+{% endblock %}
 
 {% block contents %}
 <div class="row">
-    <div class="col-10">
+    <div class="col-12">
         <form method="POST" action=".">
             {% csrf_token %}  
             <div class="group">
