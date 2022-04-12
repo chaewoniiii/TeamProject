@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from .models import User
 from django.contrib.auth.hashers import make_password, check_password
 from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
 
@@ -53,12 +54,25 @@ def login(request):
         if not(userId and password):
             res_data['error'] = '모든 값을 입력해야 합니다.'
         else:
-            user = User.objects.get(userId=userId)
-            if check_password(password, user.password):
-                request.session['user'] = user.id
-                return redirect('/')
-            else:
-                res_data['password_error'] = '비밀번호를 틀렸습니다.'
+            try:
+                user = User.objects.get(userId=userId)
+            except AttributeError:
+                res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다'
+            except ObjectDoesNotExist:
+                res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다'
+            except UnboundLocalError:
+                res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다'
+            try:
+                if check_password(password, user.password):
+                    request.session['user'] = user.id
+                    return redirect('/')
+            except UnboundLocalError:
+                res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다.'
+            try:
+                if password != user.password:
+                    res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다.'
+            except UnboundLocalError:
+                res_data['login_error'] = '아이디(또는 비밀번호)를 잘못입력하셨습니다.'
 
         return render(request, 'login.html', res_data)
         
