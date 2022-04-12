@@ -13,7 +13,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><br><a class="nav-link" aria-current="page" href="{% url 'Main:home'%}">메인</a></li>
                 <li class="nav-item"><br><a class="nav-link" href="{% url 'movie:movie_list' %}">영화목록</a></li>
-                <li class="nav-item"><br><a class="nav-link" href="#!">예매하기</a></li>
+                <li class="nav-item"><br><a class="nav-link" href="{% url 'Ticket:ticket_book' %}">예매하기</a></li>
                 <li class="nav-item"><br><a class="nav-link" href="{% url 'News:news_list'%}">공지사항</a></li>
                 {% if not request.session.user %}
                 <li class="nav-item"><br><a class="nav-link" href="{% url 'User:login'%}">로그인</a></li>

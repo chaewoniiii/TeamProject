@@ -5,7 +5,7 @@ from movie.models import Movie, Ticket_info
 
 def ticket_book(request):
     if not request.session.get('user'):
-        return redirect('/user/login/')
+        return render(request, 'bookOk.html', {'error': 3})
 
     all_movies = Movie.objects.all()
     all_tickets = Ticket_info.objects.all()
@@ -18,6 +18,14 @@ def ticket_book(request):
         'areas': all_areas,
         'branches': all_branches,
     }
+
+    # pay = request.GET['pay']
+    # number_people = request.GET['number_people']
+    # userId = request.session.get('user')
+    # movie_code = request.GET['ticket']
+
+    # # ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
+    # ticket.save()
 
     return render(request, 'ticket_book.html', context)
 
