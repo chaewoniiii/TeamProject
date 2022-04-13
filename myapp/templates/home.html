@@ -5,67 +5,100 @@
 {% block header%}
     {% include 'header.html' %}
 {% endblock %}
-{% block script%}
-<script type="text/javascript">
-    $(function(){
-      $('#myCarousel').carousel({
-        interval: 2500,
-        pause: "false"
-      });
-      $('.carousel-item').filter(':first').addClass('active');
-    });
-</script>
-{% endblock %}
+
 
 
 {% block contents %}
-
-
-<table class="table border border-dark bg-light">
-    <th colspan="3" class="text-center">
-        <h2><b>최근 15일 이내 개봉한 영화</b></h3>
-    </th>
-    <tr>
-        <td colspan="3" class="text-center">
-            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  {% for image in movie_s %}
-                  <div class="carousel-item">
-                      {% if image.poster_path %}
-                            <a href="{% url 'movie:movie_info' image.pk %}"><img src="https://image.tmdb.org/t/p/w500{{image.poster_path}}" style="width: 300px; height: 450px; margin-left: 35px;" alt=""></a>
-                      {% endif %}
-                  </div>
-                  {% endfor %}
-                </div>
+<header class="py-4">
+    <div>
+        <div class="text-center">
+            <div>
+                <img src="/static/img/moviemain.jpg" style="width: 1270px; height: 500px;">
             </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="align-middle col-2">
-            {% if movie.has_previous%}
-                <a href="?p=1"><img src="{% static 'img/left_2arrow.png'%}" width="50" height="50" alt=""></a>
-                <a href="?p={{movie.previous_page_number}}"><img src="{% static 'img/left_arrow.png'%}" width="50" height="50" alt=""> </a>
-            {% endif %}
-        </td>
-        <td class="align-middle text-center col-8">
-            {% for movies in movie %}
-                <div>
-                    <div class="d-flex justify-content-center"> 
-                        <a href="{% url 'movie:movie_info' movies.pk %}">
-                            <img src="https://image.tmdb.org/t/p/w500{{movies.poster_path}}"class="card-img-top" alt="..." style="height:450px; width:300px" id="mainImg" >
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </td>
-        <td class="align-middle col-2">
-            {% if movie.has_next %}
-                <a href="?p={{movie.next_page_number}}"><img src="{% static 'img/right_arrow.png'%}" width="50" height="50" alt=""></a>
-                <a href="?p={{movie.paginator.num_pages}}"><img src="{% static 'img/right_2arrow.png'%}" width="50" height="50" alt=""></a> 
-            {% endif %}
-        </td>
-    </tr>
+        </div>
+    </div>
+</header>
+<br>
 
-</table>
+<div class="row" style="border: 2px solid black; border-radius: 10px; margin-bottom: 20px;">
+    <div class="col-3">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="margin: 20px;">
+            <div class="carousel-inner">
+                {% for image in moviedata1 %}
+                <div class="carousel-item item">
+                    {% if image.poster_path %}
+                    <a href="{% url 'movie:movie_info' image.pk %}"><img src="https://image.tmdb.org/t/p/w500{{image.poster_path}}" style="width: 300px; height: 450px;" alt=""></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div id="myCarousel2" class="carousel slide" data-bs-ride="carousel" style="margin: 20px;">
+            <div class="carousel-inner">
+                {% for image in moviedata2 %}
+                <div class="carousel-item item2">
+                    {% if image.poster_path %}
+                    <a href="{% url 'movie:movie_info' image.pk %}"><img src="https://image.tmdb.org/t/p/w500{{image.poster_path}}" style="width: 300px; height: 450px;" alt=""></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div id="myCarousel3" class="carousel slide" data-bs-ride="carousel" style="margin: 20px;">
+            <div class="carousel-inner">
+                {% for image in moviedata3 %}
+                <div class="carousel-item item3">
+                    {% if image.poster_path %}
+                    <a href="{% url 'movie:movie_info' image.pk %}"><img src="https://image.tmdb.org/t/p/w500{{image.poster_path}}" style="width: 300px; height: 450px;" alt=""></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div id="myCarousel4" class="carousel slide" data-bs-ride="carousel" style="margin: 20px;">
+            <div class="carousel-inner">
+                {% for image in moviedata4 %}
+                <div class="carousel-item item4">
+                    {% if image.poster_path %}
+                    <a href="{% url 'movie:movie_info' image.pk %}"><img src="https://image.tmdb.org/t/p/w500{{image.poster_path}}" style="width: 300px; height: 450px;" alt=""></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+      $('#myCarousel').carousel({
+        interval: 500,
+        pause: "false"
+      });
+      $('#myCarousel2').carousel({
+        interval: 500,
+        pause: "false"
+      });
+
+      $('#myCarousel3').carousel({
+        interval: 500,
+        pause: "false"
+      });
+
+      $('#myCarousel4').carousel({
+        interval: 500,
+        pause: "false"
+      });
+      $('.item').filter(':first').addClass('active');
+      $('.item2').filter(':first').addClass('active');
+      $('.item3').filter(':first').addClass('active');
+      $('.item4').filter(':first').addClass('active');
+    });
+</script>
 
 {% endblock %}
