@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load startswith %}
 {% block header %}
 {% if madmin != 1 %}
 {% include 'header.html'%}
@@ -8,41 +9,46 @@
 
 {% block contents %}
 <div class="container">
-    <div class="container"> <!-- 영화 -->
-        <ul>
-            {% for movie in movies %}
-            <li>
-                <a href="#" name="movie_title" value="{{ movie.title }}">{{ movie.title }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="container"> <!-- 지역 -->
-        <ul>
-            {% for area in areas %}
-            <li>
-                <a href="#" name="area" value="{{ area.area }}">{{ area.area }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="container"> <!-- 영화편 -->
-        <ul>
-            {% for movie in movies %}
-            {% for ticket in tickets %}
-            {% for branch in branches %}
-            {% if ticket.branch_name == branch.branch_name and movie.title == ticket.title %}
-            <li>
-                <a href="#" name="ticket" value="{{ ticket.title }}">{{ ticket.title }} | {{ ticket.start_time }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-            {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-    <form action="." method="post">
-        {% csrf_token %}
+    <form id="sub" action="{% url 'Kakao:pay'%}" method="post">
+    <!-- <form action="." method="post"> -->
+    {% csrf_token %}
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link align-middle px-0 text-dark" onclick="seoulshow()">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">서울</span>
+                            </button>
+                            <button type="button" class="nav-link align-middle px-0 text-dark" onclick="gyeonggishow()">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">경기</span>
+                            </button>
+                        </li>
+                    <hr>
+                </div>
+            </div>
+            <div class="col py-3" style="display: none;" id="seoul">
+                {% for ticket in tickets%}
+                {% if ticket.branch_name.branch_name|startswith:'서울' %}
+                <li>
+                    <input type="radio" name="movie_choice" id="movie_choice" value="{{ticket.title.pk}}" required>{{ticket.title}} | {{ticket.start_time}} | {{ticket.branch_name.branch_name}}
+                </li>
+                {% endif%}
+                {% endfor %}
+            </div>
+            <div class="col py-3" style="display: none;" id="gyeonggi">
+                {% for ticket in tickets%}
+                {% if ticket.branch_name.branch_name|startswith:'경기' %}
+                <li>
+                    <input type="radio" name="movie_choice" id="movie_choice" value="{{ticket.title.pk}}" required>{{ticket.title}} | {{ticket.start_time}} | {{ticket.branch_name.branch_name}}
+                </li>
+                {% endif%}
+                {% endfor %}
+            </div>
+
+        </div>
+      </div>
     <label for="adult">성인</label>
     <select name="adult" id="adult">
         <option value="0">0</option>
@@ -79,7 +85,33 @@
         <option value="7">7</option>
         <option value="8">8</option>
     </select>
-    <button type="submit">예매하기</button>
+    <button type="button" onclick="chkoption()" id="kakao"><img src="{%static 'img/payment_icon_yellow_small.png'%}" alt=""></button>
 </form>
 </div>
+<script>
+    function chkoption(){
+        if($('input:radio[name="movie_choice"]').is(':checked')){
+            if(($('#adult').val() || $('teenager').val() || $('kid').val()) == 0){
+                alert('인원수를 정해주세요')
+                return false
+            }
+            else{
+                $('#sub').submit()
+            }
+        }
+        else{
+            alert("영화를 선택해주세요")
+        }
+    }
+
+    function seoulshow(){
+            $('#seoul').show()
+            $('#gyeonggi').hide()
+    }
+    function gyeonggishow(){
+            $('#seoul').hide()
+            $('#gyeonggi').show()
+    }
+
+</script>
 {% endblock %}

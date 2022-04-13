@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% load humanize %}
+{% block contents%}
+<div class="mt-5 pt-5 row justify-content-center">
+    <h2 class="text-center my-5 col-12">결제가 완료되었습니다!</h2>
+    <div class="col-5 p-5 bg-light">
+      <h3 class="text-center my-5">주문자 정보</h3>
+      <div>
+        <div class="my-3 row"><div class="h5 col-5">주문번호</div><div class="h6 col-7 text-right">{{ res.partner_order_id }}</div></div>
+        <div class="my-3 row"><div class="h5 col-5">상품명</div><div class="h6 col-7 text-right">{{ res.item_name }}</div></div>
+        <div class="my-3 row"><div class="h5 col-5">결제자</div><div class="h6 col-7 text-right">{{ user.username }}</div></div>
+        <div class="my-3 row"><div class="h5 col-5">결제금액</div><div class="h6 col-7 text-right">{{ amount|intcomma }}원</div></div>
+        <div class="my-3 row"><div class="h5 col-5">인원</div><div class="h6 col-7 text-right">
+          {% if adult %}
+            성인:{{adult}}명
+          {% endif %}
+          {% if teenager %}
+            청소년:{{teenager}}명
+          {% endif %}
+          {% if kid %}
+            유아:{{kid}}명
+          {% endif %}
+        </div></div>
+        <div class="my-3 row"><div class="h5 col-5">결제승인시각</div><div class="h6 col-7 text-right">{{ res.approved_at }}</div></div>
+      </div>
+      <div class="mt-5 pt-3 text-center">
+        <a href="/" class="btn btn-warning">메인으로 돌아가기</a>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

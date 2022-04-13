@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'myapp',
     'news',
     'rating_board',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'ticket',
     'movie',
     'movieAdmin',
+    'kakaopay',
 ]
 
 MIDDLEWARE = [

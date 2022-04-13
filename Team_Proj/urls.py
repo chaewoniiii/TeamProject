@@ -26,4 +26,5 @@ urlpatterns = [
     path('ticket/', include('ticket.urls')),
     path('movie/', include('movie.urls')),
     path('movieAdmin/', include('movieAdmin.urls')),
+    path('kakaopay/', include('kakaopay.urls')),
 ]

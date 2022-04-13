@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block contents%}
+<form method="post">
+    <div>
+        <h1 class="my-5">KAKAO PAY</h1>
+        <form method="post">
+          {% csrf_token %}
+          <button>
+              <img src="{% static 'img/payment_icon_yellow_small.png' %}" alt="">
+          </button>
+        </form>
+      </div>
+</form>
+{% endblock %}

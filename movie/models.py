@@ -25,8 +25,7 @@ class Ticket_info(models.Model):
 
     branch_name = models.ForeignKey('movieAdmin.Branch_office', on_delete=models.CASCADE)
     title = models.ForeignKey('Movie', on_delete=models.CASCADE)
-    # 좌석
-    # 상영관
+  
 
     class Meta:
         db_table = 'ticket_info'

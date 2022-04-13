@@ -1,7 +1,10 @@
+from datetime import datetime, timedelta
+from turtle import title
 from django.shortcuts import render, redirect
 from .models import Ticket
 from movieAdmin.models import Area_info, Branch_office
 from movie.models import Movie, Ticket_info
+from user.models import User
 
 def ticket_book(request):
     if not request.session.get('user'):
@@ -12,26 +15,21 @@ def ticket_book(request):
     all_areas = Area_info.objects.all()
     all_branches = Branch_office.objects.all()
 
+    now = datetime.now()
+    before_now = now - timedelta(days=30)
+    now_movie = all_movies.filter(released_date__gte = before_now)
+    
     context = {
-        'movies': all_movies,
+        'movies': now_movie,
         'tickets': all_tickets,
         'areas': all_areas,
         'branches': all_branches,
     }
 
+
     if request.method == 'POST':
-       adult = int(request.POST.get('adult',0))
-       teenager = int(request.POST.get('teenager',0))
-       kid = int(request.POST.get('kid',0))
-
-       pay = adult * 12000 + teenager * 9000 + kid * 6000
-       number_people = adult + teenager + kid
-
-       movie_code = request.POST.get('ticket')
-
-       userId = request.session.get('user')
-       ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
-       ticket.save()
+        movie_pk = request.POST.get('movie_choice')
+        print(Movie.objects.get(pk=movie_pk))
 
     return render(request, 'ticket_book.html', context)
 

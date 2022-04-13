@@ -1,9 +1,12 @@
+from datetime import datetime, timedelta
 from multiprocessing import context
 from django.shortcuts import redirect, render
 from user.models import User
-from movie.models import Movie
+from movie.models import Movie, Ticket_info
 from news import views as news_view
 from django.core.paginator import Paginator
+from movieAdmin.models import Area_info, Branch_office
+
 # Create your views here.
 
 def admin_newlist(request):
@@ -64,5 +67,34 @@ def admin_userchk(request):
 
 
 def movie_insert(request):
-    moviedata = Movie.objects.all()
-    return render(request, 'movie_insert.html', {'moviedata': moviedata})
+    all_movie = Movie.objects.all()
+    now = datetime.now()
+    before_now = now - timedelta(days=30)
+    now_movie = all_movie.filter(released_date__gte = before_now)
+
+    all_areas = Area_info.objects.all()
+    all_branches = Branch_office.objects.all()
+    context = {
+        'moviedata' : now_movie,
+        'office' : all_branches,
+        'area' : all_areas,
+    }
+    if request.method == 'POST':
+        print("POST")
+        mv = request.POST.get('movie')
+        bv = request.POST.get('officesel')
+        dv = request.POST.get('date_add')
+
+        movie_add = Movie.objects.get(pk=mv)
+        branch_add = Branch_office.objects.get(pk=bv)
+        date_add = dv
+       
+
+        ticket_add = Ticket_info()
+        ticket_add.start_time = date_add
+        ticket_add.branch_name = branch_add
+        ticket_add.title = movie_add
+        ticket_add.save()
+        return render(request, 'admin_ticketOk.html')
+
+    return render(request, 'movie_insert.html', context)
