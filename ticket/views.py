@@ -18,7 +18,11 @@ def ticket_book(request):
         'areas': all_areas,
         'branches': all_branches,
     }
-
+    if request.method == 'POST':
+       a = request.POST.get('adult',0)
+       b = request.POST.get('teenager',0)
+       c = request.POST.get('kid',0)
+       print(a, b, c)
     # adult =
     # teenager =
     # kid =

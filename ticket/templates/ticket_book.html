@@ -41,6 +41,8 @@
             {% endfor %}
         </ul>
     </div>
+    <form action="." method="post">
+        {% csrf_token %}
     <label for="adult">성인</label>
     <select name="adult" id="adult">
         <option value="0">0</option>
@@ -77,6 +79,7 @@
         <option value="7">7</option>
         <option value="8">8</option>
     </select>
-    <button href=".">예매하기</button>
+    <button type="submit">예매하기</button>
+</form>
 </div>
 {% endblock %}

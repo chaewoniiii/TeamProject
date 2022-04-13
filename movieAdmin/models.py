@@ -4,7 +4,7 @@ from django.db import models
 
 class Area_info(models.Model):
     area = models.CharField(max_length=200)
-
+    
     class Meta:
         db_table = 'area_info'
 
