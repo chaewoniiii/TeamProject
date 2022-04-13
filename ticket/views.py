@@ -18,22 +18,20 @@ def ticket_book(request):
         'areas': all_areas,
         'branches': all_branches,
     }
+
     if request.method == 'POST':
-       a = request.POST.get('adult',0)
-       b = request.POST.get('teenager',0)
-       c = request.POST.get('kid',0)
-       print(a, b, c)
-    # adult =
-    # teenager =
-    # kid =
+       adult = int(request.POST.get('adult',0))
+       teenager = int(request.POST.get('teenager',0))
+       kid = int(request.POST.get('kid',0))
 
-    # pay = adult * 12000 + teenager * 9000 + kid * 6000
-    # number_people = adult + teenager + kid
-    # userId = request.session.get('user')
-    # movie_code = request.GET['ticket']
+       pay = adult * 12000 + teenager * 9000 + kid * 6000
+       number_people = adult + teenager + kid
 
-    # ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
-    # ticket.save()
+       movie_code = request.POST.get('ticket')
+
+       userId = request.session.get('user')
+       ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
+       ticket.save()
 
     return render(request, 'ticket_book.html', context)
 
