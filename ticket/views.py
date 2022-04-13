@@ -19,12 +19,16 @@ def ticket_book(request):
         'branches': all_branches,
     }
 
-    # pay = request.GET['pay']
-    # number_people = request.GET['number_people']
+    # adult =
+    # teenager =
+    # kid =
+
+    # pay = adult * 12000 + teenager * 9000 + kid * 6000
+    # number_people = adult + teenager + kid
     # userId = request.session.get('user')
     # movie_code = request.GET['ticket']
 
-    # # ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
+    # ticket = Ticket(pay=pay, number_people=number_people, userId=userId, movie_code=movie_code)
     # ticket.save()
 
     return render(request, 'ticket_book.html', context)
