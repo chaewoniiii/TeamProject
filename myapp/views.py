@@ -12,18 +12,28 @@ def index(request):
                 request.session['userid'] = user.userId
         except User.DoesNotExist:
                 pass
-        moviedata = Movie.objects.all().order_by('-released_date')
-        context = {}
-        now = datetime.now()
-        before_now = now - timedelta(days=15)
-        now_movie = moviedata.filter(released_date__gte = before_now)
-        paginator = Paginator(now_movie, 1)
-        page_number = request.GET.get('p')
-        page_obj = paginator.get_page(page_number)
+        moviedata = Movie.objects.all()
+        moviedata1 = moviedata[:10]
+        moviedata2 = moviedata[10:20]
+        moviedata3 = moviedata[20:30]
+        moviedata4 = moviedata[30:]
+
+        # context = {}
+        # now = datetime.now()
+        # before_now = now - timedelta(days=15)
+        # now_movie = moviedata.filter(released_date__gte = before_now)
+        # paginator = Paginator(now_movie, 1)
+        # page_number = request.GET.get('p')
+        # page_obj = paginator.get_page(page_number)
 
         context = {
-                'movie' : page_obj,
-                'movie_s' : now_movie
+                # 'movie' : page_obj,
+                # 'movie_s' : now_movie
+                'moviedata': moviedata,
+                'moviedata1': moviedata1,
+                'moviedata2': moviedata2,
+                'moviedata3': moviedata3,
+                'moviedata4': moviedata4,
         }
 
 
