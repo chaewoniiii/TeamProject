@@ -1,20 +1,31 @@
-div.group{
+div.group {
     border: 5px solid black;
     padding: 50px 50px;
     background-color: rgb(216, 208, 208);
 }
 
-.form-control{
+.form-control {
     font-style: red;
 }
 
 
 
-.register-btn{
-    background-color: red;
-    float: left;
+.register-btn {
+    background-color: rgb(241, 219, 219);
+    color: black;
 }
 
-.login-btn{
-    background-color: red;
+.login-btn {
+    background-color: rgb(241, 219, 219);
+    color: black;
+}
+
+.login-btn:hover {
+    background-color: black;
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: black;
+    color: white;
 }
