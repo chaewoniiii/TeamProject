@@ -29,3 +29,7 @@ div.group {
     background-color: black;
     color: white;
 }
+
+.padding{
+    padding: 0px 250px;
+}
