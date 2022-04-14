@@ -6,5 +6,5 @@ app_name = 'Kakao'
 urlpatterns = [
     path('',views.pay, name='pay'),
     path('payOk/', views.payOk, name='payOk'),
-    path('payres/', views.payres)
+    path('payCancel/', views.payres, name='payres')
 ]
